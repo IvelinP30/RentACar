@@ -2,6 +2,7 @@ package com.RentACar.RentACar.entities;
 
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -25,14 +26,23 @@ public class User {
     @Column(name = "isManager")
     private boolean isManager;
 
+    @ManyToMany
+    @JoinTable(
+            name = "users_cars",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "car_id")
+    )
+    private Set<Car> userCars;
+
     public User() {
     }
 
-    public User(String firstName, String lastName, City city, boolean isManager) {
+    public User(String firstName, String lastName, City city, boolean isManager, Set<Car> userCars) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.city = city;
         this.isManager = isManager;
+        this.userCars = userCars;
     }
 
     public String getFirstName() {
@@ -65,5 +75,13 @@ public class User {
 
     public void setManager(boolean manager) {
         isManager = manager;
+    }
+
+    public Set<Car> getUserCars() {
+        return userCars;
+    }
+
+    public void setUserCars(Set<Car> userCars) {
+        this.userCars = userCars;
     }
 }
