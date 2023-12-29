@@ -2,6 +2,7 @@ package com.RentACar.RentACar.controllers;
 
 import com.RentACar.RentACar.entities.Car;
 import com.RentACar.RentACar.entities.User;
+import com.RentACar.RentACar.entities.UserCar;
 import com.RentACar.RentACar.repositories.CarRepository;
 import com.RentACar.RentACar.repositories.UserRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -29,8 +31,8 @@ public class DemoController {
         User selectedUser = userRepo.findByFirstNameAndLastName(firstName,lastName);
         List<Car> result = new ArrayList<>();
 
-        for(Car car:selectedUser.getUserCars()){
-            result.add(car);
+        for(UserCar userCar:selectedUser.getUserCars()){
+            result.add(userCar.getCar());
         }
 
         return result;

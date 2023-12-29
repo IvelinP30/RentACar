@@ -1,6 +1,6 @@
 package com.RentACar.RentACar.entities;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 import java.util.Set;
@@ -25,16 +25,22 @@ public class Car {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToMany(mappedBy = "userCars")
-    Set<User> carUsers;
+    @OneToMany(mappedBy = "car")
+    @JsonIgnore
+    private Set<UserCar> carUsers;
 
-    public Car(String brand, String model, Category category) {
+    public Car(String brand, String model, Category category, Set<UserCar> carUsers) {
         this.brand = brand;
         this.model = model;
         this.category = category;
+        this.carUsers = carUsers;
     }
 
     public Car() {
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getBrand() {
@@ -59,5 +65,13 @@ public class Car {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Set<UserCar> getCarUsers() {
+        return carUsers;
+    }
+
+    public void setCarUsers(Set<UserCar> carUsers) {
+        this.carUsers = carUsers;
     }
 }
