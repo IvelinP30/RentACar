@@ -26,6 +26,7 @@ public class UserCar {
     }
 
     public UserCar(User user, Car car) {
+        this.id = new UserCarKey(user.getId(), car.getId());
         this.user = user;
         this.car = car;
     }
