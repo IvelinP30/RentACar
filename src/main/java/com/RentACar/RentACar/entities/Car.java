@@ -13,9 +13,10 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "brand")
+    @ManyToOne
+    @JoinColumn(name = "brand")
     @NotNull
-    private String brand;
+    private Brand  brand;
 
     @Column(name = "model")
     @NotNull
@@ -25,14 +26,19 @@ public class Car {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "fuel_id")
+    private Fuel fuel;
+
     @OneToMany(mappedBy = "car")
     @JsonIgnore
     private Set<UserCar> carUsers;
 
-    public Car(String brand, String model, Category category, Set<UserCar> carUsers) {
+    public Car(Brand brand, String model, Category category, Fuel fuel, Set<UserCar> carUsers) {
         this.brand = brand;
         this.model = model;
         this.category = category;
+        this.fuel = fuel;
         this.carUsers = carUsers;
     }
 
@@ -43,11 +49,11 @@ public class Car {
         return id;
     }
 
-    public String getBrand() {
+    public Brand  getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand;
     }
 
@@ -66,6 +72,15 @@ public class Car {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    public Fuel getFuel() {
+        return fuel;
+    }
+
+    public void setFuel(Fuel fuel) {
+        this.fuel = fuel;
+    }
+
 
     public Set<UserCar> getCarUsers() {
         return carUsers;
