@@ -1,7 +1,9 @@
 package com.RentACar.RentACar.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.Date;
 import org.antlr.v4.runtime.misc.NotNull;
 import java.util.Set;
 
@@ -22,10 +24,20 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "city_id")
+    @JsonBackReference
     private City city;
+
+    @Column(name = "birth_date")
+    private Date birthDate;
 
     @Column(name = "isManager")
     private boolean isManager;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
@@ -34,11 +46,12 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, City city, boolean isManager) {
+    public User(String firstName, String lastName, City city, boolean isManager, Date birthDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.city = city;
         this.isManager = isManager;
+        this.birthDate = birthDate;
     }
 
     public Long getId() {
@@ -79,6 +92,30 @@ public class User {
 
     public Set<UserCar> getUserCars() {
         return userCars;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setUserCars(Set<UserCar> userCars) {
