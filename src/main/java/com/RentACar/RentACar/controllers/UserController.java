@@ -1,9 +1,7 @@
 package com.RentACar.RentACar.controllers;
 
-import com.RentACar.RentACar.entities.City;
 import com.RentACar.RentACar.entities.User;
 import com.RentACar.RentACar.payload.request.UserRequest;
-import com.RentACar.RentACar.repositories.CityRepository;
 import com.RentACar.RentACar.repositories.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,11 +18,9 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
     private final UserRepository userRepo;
-    private final CityRepository cityRepo;
 
-    public UserController(UserRepository userRepo, CityRepository cityRepo) {
+    public UserController(UserRepository userRepo) {
         this.userRepo = userRepo;
-        this.cityRepo = cityRepo;
     }
 
     @GetMapping("/fetch")
@@ -51,10 +47,6 @@ public class UserController {
         List<User> result = userRepo.findByFirstNameAndLastName(fName, lName);
         return ResponseEntity.ok(result.isEmpty()? "Not Found!" : result);
     }
-    @GetMapping("/cities")
-    public List<City> getAllCities(){
-        return cityRepo.findAll();
-    }
 
     @DeleteMapping("/delete")
     public String deleteUser(String fName, String lName){
@@ -76,7 +68,7 @@ public class UserController {
                 user.setCity(userRequest.getCity());
                 user.setBirthDate(userRequest.getBirthDate());
                 user.setManager(userRequest.isManager());
-                return ResponseEntity.ok("User" + user + "is saved!");
+                return ResponseEntity.ok("User" + user + "is added!");
             }
         }
         return ResponseEntity.ok("User" + userRepo.save(new User(userRequest.getFirstName(),
