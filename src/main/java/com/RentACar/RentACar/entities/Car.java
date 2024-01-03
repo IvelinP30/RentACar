@@ -1,8 +1,8 @@
 package com.RentACar.RentACar.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
+import java.util.Date;
 import java.util.Set;
 
 
@@ -29,6 +29,9 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "fuel_id")
     private Fuel fuel;
+
+    //@Column(name = "date_manufactured")
+    //private Date date;
 
     @OneToMany(mappedBy = "car")
     private Set<UserCar> carUsers;

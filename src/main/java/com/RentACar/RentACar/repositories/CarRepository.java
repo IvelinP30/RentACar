@@ -13,13 +13,12 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     Car findByBrandAndModel(String brand, String model);
 
     @Query("SELECT c " +
-            "FROM Cars c " +
+            "FROM Car c " +
             "WHERE " +
-            "u.brand " +
+            "c.brand " +
             "= :#{#brand == null || #brand.isEmpty()? '%' : #brand +'%'} " +
-            "AND u.model" +
-            "= :#{#model == null || #model.isEmpty()? '%' : #model +'%'}" +
-            "LIMIT 1"
+            "AND c.model" +
+            "= :#{#model == null || #model.isEmpty()? '%' : #model +'%'}"
     )
     Page<Car> filterCarPages(Pageable pageable, String brand, String model);
 }

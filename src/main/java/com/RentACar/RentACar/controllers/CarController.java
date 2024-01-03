@@ -17,7 +17,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/user")
+@RequestMapping("/car")
 public class CarController {
     private final CarRepository carRepo;
 
