@@ -31,7 +31,6 @@ public class Car {
     private Fuel fuel;
 
     @OneToMany(mappedBy = "car")
-    @JsonIgnore
     private Set<UserCar> carUsers;
 
     public Car(Brand brand, String model, Category category, Fuel fuel, Set<UserCar> carUsers) {

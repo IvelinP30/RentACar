@@ -40,7 +40,6 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
     private Set<UserCar> userCars;
 
     public User() {

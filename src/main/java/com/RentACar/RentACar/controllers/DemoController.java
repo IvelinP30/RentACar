@@ -29,7 +29,7 @@ public class DemoController {
 /*
     @GetMapping("show/user/cars")
     public List<Car> showUserCar(String firstName, String lastName){
-        User selectedUser = userRepo.findByFirstNameAndLastName(firstName,lastName);
+        List<User> selectedUser = userRepo.findByFirstNameAndLastName(firstName,lastName);
         List<Car> result = new ArrayList<>();
 
         for(UserCar userCar:selectedUser.getUserCars()){

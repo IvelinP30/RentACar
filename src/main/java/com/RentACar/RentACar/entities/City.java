@@ -18,7 +18,7 @@ public class City {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "city")
-    private Set<User> clients;
+    private Set<User> users;
 
     public City(){
     }
@@ -39,11 +39,11 @@ public class City {
         this.name = name;
     }
 
-    public Set<User> getClients() {
-        return clients;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setClients(Set<User> clients) {
-        this.clients = clients;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }
