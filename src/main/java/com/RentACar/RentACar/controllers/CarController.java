@@ -32,7 +32,15 @@ public class CarController {
 
     @GetMapping("/find/model")
     public ResponseEntity<?> findCarByBrandAndModel(String Brand, String Model){
-        Car result = carRepo.findByBrandAndModel(Brand, Model);
+        List<Car> result = carRepo.findByBrandAndModel(Brand, Model);
+        return ResponseEntity.ok(result != null ?
+                result :
+                "Not Found!");
+    }
+
+    @GetMapping("/find/brand")
+    public ResponseEntity<?> findCarByBrand(String Brand){
+        List<Car> result = carRepo.findByBrand(Brand);
         return ResponseEntity.ok(result != null ?
                 result :
                 "Not Found!");
