@@ -7,25 +7,28 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 class UserGenerator {
-    static User[] generateUsers(City[] city){
-        User[] users = new User[4];
+    static User[] generateUsers(City[] cities){
         String[] names = {"Ivan Ivanov", "Pesho Peshev", "Gosho Goshev", "Mitko Mitev"};
+        User[] users = new User[names.length];
 
         for(int i = 0; i < users.length; i++){
             String[] currentFullName = names[i].split(" ");
             String currentFirstName = currentFullName[0];
             String currentLastName = currentFullName[1];
 
-            users[i] = new User(currentFirstName, currentLastName, city[i], i % 2 == 0, GenerateRandomDate());
-        }
+            users[i] = new User(
+                    currentFirstName,
+                    currentLastName,
+                    cities[randomCityIndex(cities.length)],
+                    i % 2 == 0, GenerateRandomDate());        }
 
         return users;
     }
 
-    private static Date GenerateRandomDate(){ // TODO -> TEST THE RANDOM GERNERATOR
+    private static Date GenerateRandomDate(){
         GregorianCalendar gc = new GregorianCalendar();
 
-        int year = randBetween(1900, 2002);
+        int year = randBetween(1965, 2002);
 
         gc.set(gc.YEAR, year);
 
@@ -38,5 +41,9 @@ class UserGenerator {
 
     private static int randBetween(int start, int end) {
         return start + (int)Math.round(Math.random() * (end - start));
+    }
+
+    private static int randomCityIndex(int cityArrayLength){
+        return randBetween(0, cityArrayLength - 1);
     }
 }
