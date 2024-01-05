@@ -81,7 +81,13 @@ public class CityController {
     }
 
     @GetMapping("city/users")
-    public ResponseEntity<?> cityUsers(String name){
+    public ResponseEntity<?> cityUsers(
+            @RequestParam(defaultValue = "") String name,
+            @RequestParam(defaultValue = "1") Integer currentPage,
+            @RequestParam(defaultValue = "4") Integer recordsPerPage){
+
+        Pageable pageable = PageRequest.of(currentPage - 1, recordsPerPage);
+
         City selectedCity = cityRepo.findCityByName(name);
 
         if(selectedCity == null){

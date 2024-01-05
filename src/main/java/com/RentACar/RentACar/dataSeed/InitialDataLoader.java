@@ -36,6 +36,7 @@ public class InitialDataLoader implements CommandLineRunner {
         loadCategories();
         loadCities();
         loadFuel();
+        loadUsers();
     }
 
     private void loadBrands(){
@@ -90,13 +91,15 @@ public class InitialDataLoader implements CommandLineRunner {
             fuelRepo.saveAll(fuelsToSave);
         }
 
-    /*private void loadUsers(){
-        List<User> users = Arrays.asList(UserGenerator.generateUsers(cityRepo.findAll().toArray(new City[0])));
-        List<User> usersToSave = new ArrayList<>();
-        for(User user: users){
-            if(){
-                usersToSave.add(user);
+        private void loadUsers(){
+            List<User> users = Arrays.asList(UserGenerator.generateUsers(cityRepo.findAll().toArray(new City[0])));
+            List<User> usersToSave = new ArrayList<>();
+            for(User user: users){
+                if(userRepo.findByFirstNameAndLastName(user.getFirstName(), user.getLastName()).isEmpty()){
+                    usersToSave.add(user);
+                }
             }
+
+            userRepo.saveAll(usersToSave);
         }
-    }*/
     }
