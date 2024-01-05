@@ -25,7 +25,15 @@ public class UserController {
 
     @GetMapping("/fetch")
     public List<User> getAllUsers(){
-        return userRepo.findAll();
+        List<User> result = userRepo.findAll();
+        return result;
+
+        /*List<UserResponse> result = new ArrayList<>();
+        for(User user: userRepo.findAll()){
+            result.add(new UserResponse(){
+            });
+        }
+        return result;*/
     }
 
     @GetMapping("/pages")

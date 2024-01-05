@@ -95,7 +95,7 @@ public class CityController {
             return ResponseEntity.ok(String.format("%s was not found", cityName));
         }
 
-        Page<User> userPage = cityRepo.findUsersByCityPageable(cityName, pageable);
+        Page<User> userPage = cityRepo.findUsersByCityPageable(cityName.toLowerCase(), pageable);
         Map<String, Object> response = new HashMap<>();
 
         response.put("users", userPage.getContent());

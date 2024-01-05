@@ -25,7 +25,7 @@ public interface CityRepository extends JpaRepository<City, Long> {
             "FROM User u " +
             "JOIN City c ON c.id = u.city.id " +
             "WHERE " +
-            "lower(c.name) " +
-            "LIKE :#{'%' + #cityName + '%'} " )
+            "lower(u.city.name) " +
+            "LIKE :#{#cityName == null || #cityName.isEmpty() ? '%' : '%' + #cityName + '%'} ")
     Page<User> findUsersByCityPageable(String cityName, Pageable pageable);
 }
