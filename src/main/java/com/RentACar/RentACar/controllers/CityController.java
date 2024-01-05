@@ -1,6 +1,7 @@
 package com.RentACar.RentACar.controllers;
 
 import com.RentACar.RentACar.entities.City;
+import com.RentACar.RentACar.entities.User;
 import com.RentACar.RentACar.repositories.CityRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -82,22 +83,25 @@ public class CityController {
 
     @GetMapping("city/users")
     public ResponseEntity<?> cityUsers(
-            @RequestParam(defaultValue = "") String name,
+            @RequestParam(defaultValue = "") String cityName,
             @RequestParam(defaultValue = "1") Integer currentPage,
             @RequestParam(defaultValue = "4") Integer recordsPerPage){
 
         Pageable pageable = PageRequest.of(currentPage - 1, recordsPerPage);
 
-        City selectedCity = cityRepo.findCityByName(name);
+        City selectedCity = cityRepo.findCityByName(cityName);
 
         if(selectedCity == null){
-            return ResponseEntity.ok(String.format("%s was not found",name));
+            return ResponseEntity.ok(String.format("%s was not found", cityName));
         }
 
-        if(selectedCity.getUsers().isEmpty()){
-            return ResponseEntity.ok(String.format("%s is empty",name));
-        }
+        Page<User> userPage = cityRepo.findUsersByCityPageable(cityName, pageable);
+        Map<String, Object> response = new HashMap<>();
 
-        return ResponseEntity.ok(selectedCity.getUsers());
+        response.put("users", userPage.getContent());
+        response.put("totalPages", userPage.getTotalPages());
+        response.put("totalElements", userPage.getTotalElements());
+
+        return ResponseEntity.ok(response);
     }
 }
