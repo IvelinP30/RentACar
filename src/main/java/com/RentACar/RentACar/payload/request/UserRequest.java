@@ -7,6 +7,7 @@ import java.util.Date;
 public class UserRequest {
     private String firstName;
     private String lastName;
+    private Integer num;
     private City city;
     private Date birthDate;
     private boolean isManager;
@@ -21,6 +22,14 @@ public class UserRequest {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
     }
 
     public void setLastName(String lastName) {

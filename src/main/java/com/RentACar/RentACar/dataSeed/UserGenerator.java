@@ -19,6 +19,7 @@ class UserGenerator {
             users[i] = new User(
                     currentFirstName,
                     currentLastName,
+                    randBetween(1, 1000),
                     cities[randomCityIndex(cities.length)],
                     i % 2 == 0, GenerateRandomDate());        }
 

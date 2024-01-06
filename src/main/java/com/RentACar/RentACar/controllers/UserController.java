@@ -2,6 +2,7 @@ package com.RentACar.RentACar.controllers;
 
 import com.RentACar.RentACar.entities.User;
 import com.RentACar.RentACar.payload.request.UserRequest;
+import com.RentACar.RentACar.payload.response.UserResponse;
 import com.RentACar.RentACar.repositories.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,16 +26,23 @@ public class UserController {
     }
 
     @GetMapping("/fetch")
-    public List<User> getAllUsers(){
-        List<User> result = userRepo.findAll();
-        return result;
+    public List<UserResponse> getAllUsers(){
+        List<User> users = userRepo.findAll();
+        //return result;
+        List<UserResponse> result = new ArrayList<>();
 
-        /*List<UserResponse> result = new ArrayList<>();
-        for(User user: userRepo.findAll()){
-            result.add(new UserResponse(){
-            });
+        for(User user: users){
+            UserResponse userResponse = new UserResponse();
+            userResponse.setFirstName(user.getFirstName());
+            userResponse.setLastName(user.getLastName());
+            userResponse.setNum(user.getNum());
+            userResponse.setCity(user.getCity().getName());
+            userResponse.setDateBirth(user.getBirthDate());
+            userResponse.setManager(user.isManager());
+
+            result.add(userResponse);
         }
-        return result;*/
+        return result;
     }
 
     @GetMapping("/pages")
@@ -72,17 +81,22 @@ public class UserController {
     public ResponseEntity<?> persistUser(@RequestBody UserRequest userRequest){
         List<User> users = userRepo.findByFirstNameAndLastName(userRequest.getFirstName(), userRequest.getLastName());
         if(users.isEmpty()) {
-            for (User user : users) {
-                user.setCity(userRequest.getCity());
-                user.setBirthDate(userRequest.getBirthDate());
-                user.setManager(userRequest.isManager());
-                return ResponseEntity.ok("User" + user + "is added!");
-            }
+            userRepo.save(new User(
+                    userRequest.getFirstName(),
+                    userRequest.getLastName(),
+                    userRequest.getNum(),
+                    userRequest.getCity(),
+                    userRequest.isManager(),
+                    userRequest.getBirthDate()));
+            return ResponseEntity.ok("User is added!");
         }
-        return ResponseEntity.ok("User" + userRepo.save(new User(userRequest.getFirstName(),
-                userRequest.getLastName(),
-                userRequest.getCity(),
-                userRequest.isManager(),
-                userRequest.getBirthDate())) + "is saved!");
+        for(User user: users){
+            user.setNum(userRequest.getNum());
+            user.setCity(userRequest.getCity());
+            user.setBirthDate(userRequest.getBirthDate());
+            user.setManager(userRequest.isManager());
+            userRepo.save(user);
+        }
+        return ResponseEntity.ok("User is saved!");
     }
 }
