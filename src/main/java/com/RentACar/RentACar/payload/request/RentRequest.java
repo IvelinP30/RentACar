@@ -5,16 +5,16 @@ import com.RentACar.RentACar.entities.Car;
 import java.util.Date;
 
 public class RentRequest {
-    private int userNum;
+    private String userNum;
     private Car car;
     private Date startDate;
     private Date finishDate;
 
-    public int getUserNum() {
+    public String getUserNum() {
         return userNum;
     }
 
-    public void setUserNum(int userNum) {
+    public void setUserNum(String userNum) {
         this.userNum = userNum;
     }
 

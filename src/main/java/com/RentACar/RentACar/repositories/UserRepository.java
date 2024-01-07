@@ -22,5 +22,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "LIKE :#{#lastName == null || #lastName.isEmpty()? '%' : #lastName +'%'}")
     Page<User> filterUserPages(Pageable pageable, String firstName, String lastName);
 
-    User findUserByNum(int userNum);
+    User findUserByNum(String userNum);
 }

@@ -7,7 +7,7 @@ import java.util.Date;
     public class UserResponse {
         private String firstName;
         private String lastName;
-        private Integer num;
+        private String num;
         private String city;
         private Date dateBirth;
         private boolean isManager;
@@ -28,11 +28,11 @@ import java.util.Date;
             this.lastName = lastName;
         }
 
-        public Integer getNum() {
+        public String getNum() {
             return num;
         }
 
-        public void setNum(Integer num) {
+        public void setNum(String num) {
             this.num = num;
         }
 
