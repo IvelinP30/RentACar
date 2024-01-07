@@ -30,18 +30,23 @@ public class Car {
     @JoinColumn(name = "fuel_id")
     private Fuel fuel;
 
-    //@Column(name = "date_manufactured")
-    //private Date date;
+    @Column(name = "date_manufactured")
+    private Date date;
+
+    @Column(name = "registration_num", length = 10)
+    @NotNull
+    private String registrationNum;
 
     @OneToMany(mappedBy = "car")
     private Set<UserCar> carUsers;
 
-    public Car(Brand brand, String model, Category category, Fuel fuel, Set<UserCar> carUsers) {
+    public Car(Brand brand, String model, Category category, Fuel fuel, Set<UserCar> carUsers, String registrationNum) {
         this.brand = brand;
         this.model = model;
         this.category = category;
         this.fuel = fuel;
         this.carUsers = carUsers;
+        this.registrationNum = registrationNum;
     }
 
     public Car() {
@@ -93,5 +98,20 @@ public class Car {
 
     public void setCarUsers(Set<UserCar> carUsers) {
         this.carUsers = carUsers;
+    }
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getRegistrationNum() {
+        return registrationNum;
+    }
+
+    public void setRegistrationNum(String registrationNum) {
+        this.registrationNum = registrationNum;
     }
 }

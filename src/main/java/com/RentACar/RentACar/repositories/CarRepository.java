@@ -31,4 +31,6 @@ public interface CarRepository extends JpaRepository<Car, Long> {
             "c.brand = :brand"
     )
     List<Car> findByBrand(String brand);
+
+    Car findByRegistrationNum(String registrationNum);
 }

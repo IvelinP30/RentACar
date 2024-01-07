@@ -22,10 +22,6 @@ public class User {
     @NotNull
     private String lastName;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Column(name = "num", length = 10)
     @NotNull
     private String num;
