@@ -30,9 +30,12 @@ public class CityController {
     }
 
     @GetMapping("filter")
-    public ResponseEntity<?> filterCities(String name, int currentPage, int perPage){
+    public ResponseEntity<?> filterCities(
+            @RequestParam(defaultValue = "") String name,
+            int currentPage,
+            int perPage){
         Pageable pageable = PageRequest.of(currentPage - 1, perPage);
-        Page<City> cities = cityRepo.filterCity(pageable,name.toLowerCase());
+        Page<City> cities = cityRepo.filterCity(pageable, name.toLowerCase());
         Map<String, Object> response = new HashMap<>();
         response.put("totalCities", cities.getTotalElements());
         response.put("totalPages", cities.getTotalPages());
@@ -60,7 +63,13 @@ public class CityController {
         }
 
         for (City city: citiesToDelete){
+            if(!city.getUsers().isEmpty()){
+                sb.append(city.getName() + " has users and cannot be deleted!");
+                continue;
+            }
+
             cityRepo.delete(city);
+
             sb.append(String.format("%s with id %s was deleted from database",
                     city.getName(),city.getId()) + "\n");
         }
@@ -72,11 +81,11 @@ public class CityController {
     public ResponseEntity<?> insert(String name){
         City selectedCity = cityRepo.findCityByName(name);
 
-        if(selectedCity != null){
+        if(cityRepo.findCityByName(name) != null){
             return ResponseEntity.ok(String.format("%s was already added",name));
         }
 
-        cityRepo.save(selectedCity);
+        cityRepo.save(new City(name));
 
         return ResponseEntity.ok(String.format("%s added successfully",name));
     }
