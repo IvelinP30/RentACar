@@ -2,6 +2,11 @@ package com.RentACar.RentACar.payload.request;
 
 public class CarRequest {
     String brand;
+    String model;
+    String dateManufactured;
+    String fuel;
+    String category;
+    String registrationNum;
 
     public String getBrand() {
         return brand;
@@ -50,12 +55,4 @@ public class CarRequest {
     public void setRegistrationNum(String registrationNum) {
         this.registrationNum = registrationNum;
     }
-
-    String model;
-    String dateManufactured;
-    String fuel;
-    String category;
-    String registrationNum;
-
-
 }

@@ -40,13 +40,14 @@ public class Car {
     @OneToMany(mappedBy = "car")
     private Set<UserCar> carUsers;
 
-    public Car(Brand brand, String model, Category category, Fuel fuel, Set<UserCar> carUsers, String registrationNum) {
+    public Car(Brand brand, String model, Category category, Fuel fuel, Set<UserCar> carUsers, String registrationNum, Date datemanufactured) {
         this.brand = brand;
         this.model = model;
         this.category = category;
         this.fuel = fuel;
         this.carUsers = carUsers;
         this.registrationNum = registrationNum;
+        this.date = datemanufactured;
     }
 
     public Car() {

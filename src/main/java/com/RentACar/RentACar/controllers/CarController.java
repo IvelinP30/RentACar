@@ -1,7 +1,6 @@
 package com.RentACar.RentACar.controllers;
 
-import com.RentACar.RentACar.entities.Car;
-import com.RentACar.RentACar.entities.User;
+import com.RentACar.RentACar.entities.*;
 import com.RentACar.RentACar.payload.request.CarRequest;
 import com.RentACar.RentACar.repositories.*;
 import org.springframework.data.domain.Page;
@@ -10,6 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +58,7 @@ public class CarController {
                 "Not Found!");
     }
     @PostMapping("/save")
-    public ResponseEntity<?> addCar(@RequestBody CarRequest carRequest){
+    public ResponseEntity<?> addCar(@RequestBody CarRequest carRequest) throws ParseException {
         if(carRepo.findByRegistrationNum(carRequest.getRegistrationNum()) != null){
             return ResponseEntity.ok("Car already exists!");
         }
@@ -72,5 +74,31 @@ public class CarController {
         if(categoryRepo.findCategoryByName(carRequest.getCategory()) == null){
             return ResponseEntity.ok(carRequest.getCategory() + " is not supported category!");
         }
+
+        if(brandRepo.findBrandByName(carRequest.getBrand()) == null){
+            return ResponseEntity.ok(carRequest.getBrand() + " is not supported brand!");
+        }
+
+        Brand selectedBrand = brandRepo.findBrandByName(carRequest.getBrand());
+        Fuel selectedFuel = fuelRepo.findFuelByName(carRequest.getFuel());
+        Category selectedCategory = categoryRepo.findCategoryByName(carRequest.getCategory());
+
+        Date dateManufactured = new SimpleDateFormat("dd/MM/yyyy").parse(carRequest.getDateManufactured());
+
+        Car car = new Car(
+                selectedBrand,
+                carRequest.getModel(),
+                selectedCategory,
+                selectedFuel,
+                null,
+                carRequest.getRegistrationNum(),
+                dateManufactured);
+
+        carRepo.save(car);
+
+        return ResponseEntity.ok(carRequest.getBrand() + " " +
+                carRequest.getModel() + " " +
+                carRequest.getRegistrationNum() +
+                " is added successfully!");
     }
 }

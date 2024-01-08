@@ -72,7 +72,7 @@ public class CityController {
     public ResponseEntity<?> insert(String name){
         City selectedCity = cityRepo.findCityByName(name);
 
-        if(selectedCity == null){
+        if(selectedCity != null){
             return ResponseEntity.ok(String.format("%s was already added",name));
         }
 
