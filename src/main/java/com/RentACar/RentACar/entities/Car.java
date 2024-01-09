@@ -58,7 +58,7 @@ public class Car {
     }
 
     public String getBrandAndModel(){
-        return brand + ", " + model;
+        return brand.getName() + ", " + model;
     }
     public Brand  getBrand() {
         return brand;

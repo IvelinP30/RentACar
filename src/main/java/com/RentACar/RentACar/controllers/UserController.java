@@ -1,9 +1,11 @@
 package com.RentACar.RentACar.controllers;
 
 import com.RentACar.RentACar.entities.User;
+import com.RentACar.RentACar.entities.City;
 import com.RentACar.RentACar.payload.request.UserRequest;
 import com.RentACar.RentACar.payload.response.UserResponse;
 import com.RentACar.RentACar.repositories.UserRepository;
+import com.RentACar.RentACar.repositories.CityRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,9 +22,11 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
     private final UserRepository userRepo;
+    private final CityRepository cityRepo;
 
-    public UserController(UserRepository userRepo) {
+    public UserController(UserRepository userRepo, CityRepository cityRepo) {
         this.userRepo = userRepo;
+        this.cityRepo = cityRepo;
     }
 
     @GetMapping("/fetch")
@@ -80,19 +84,22 @@ public class UserController {
     @PostMapping("/save")
     public ResponseEntity<?> persistUser(@RequestBody UserRequest userRequest){
         List<User> users = userRepo.findByFirstNameAndLastName(userRequest.getFirstName(), userRequest.getLastName());
+
+        City selectedCity = cityRepo.findCityByName(userRequest.getCity());
+
         if(users.isEmpty()) {
             userRepo.save(new User(
                     userRequest.getFirstName(),
                     userRequest.getLastName(),
                     userRequest.getNum(),
-                    userRequest.getCity(),
+                    selectedCity,
                     userRequest.isManager(),
                     userRequest.getBirthDate()));
             return ResponseEntity.ok("User is added!");
         }
         for(User user: users){
             user.setNum(userRequest.getNum());
-            user.setCity(userRequest.getCity());
+            user.setCity(selectedCity);
             user.setBirthDate(userRequest.getBirthDate());
             user.setManager(userRequest.isManager());
             userRepo.save(user);

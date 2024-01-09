@@ -8,7 +8,7 @@ public class UserRequest {
     private String firstName;
     private String lastName;
     private String num;
-    private City city;
+    private String city;
     private Date birthDate;
     private boolean isManager;
 
@@ -36,11 +36,12 @@ public class UserRequest {
         this.lastName = lastName;
     }
 
-    public City getCity() {
+
+    public String getCity() {
         return city;
     }
 
-    public void setCity(City city) {
+    public void setCity(String city) {
         this.city = city;
     }
 

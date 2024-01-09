@@ -98,7 +98,7 @@ public class CarController {
         }
 
         if(selectedBrand == null){
-            return ResponseEntity.ok("Our application doesn't with " + carRequest.getBrand() + " cars!");
+            return ResponseEntity.ok("Our application doesn't work with " + carRequest.getBrand() + " cars!");
         }
 
         if(selectedFuel == null){

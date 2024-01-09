@@ -27,7 +27,7 @@ public class User {
     @NotNull
     private String num;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "city_id")
     @JsonBackReference
     private City city;
