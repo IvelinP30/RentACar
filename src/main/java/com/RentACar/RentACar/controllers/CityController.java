@@ -90,7 +90,7 @@ public class CityController {
         return ResponseEntity.ok(String.format("%s added successfully",name));
     }
 
-    @GetMapping("city/users")
+    @GetMapping("users")
     public ResponseEntity<?> cityUsers(
             @RequestParam(defaultValue = "") String cityName,
             @RequestParam(defaultValue = "1") Integer currentPage,

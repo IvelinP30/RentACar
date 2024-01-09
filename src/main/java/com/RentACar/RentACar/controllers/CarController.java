@@ -52,6 +52,7 @@ public class CarController {
             CarResponse currentCar = new CarResponse();
             currentCar.setBrand(car.getBrand().getName());
             currentCar.setModel(car.getModel());
+            currentCar.setRegistrationNum(car.getRegistrationNum());
 
             for(UserCar userCar : car.getCarUsers()){
                 User currentUser = userCar.getUser();

@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,12 +38,13 @@ public class UserCarController {
     public List<RentResponse> getAllOrders(){
         List<UserCar> rents = userCarRepo.findAll();
         List<RentResponse> rentResponseList = new ArrayList<>();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         for(UserCar rent: rents){
             RentResponse rentResponse = new RentResponse();
             rentResponse.setUserName(rent.getUser().getFullName());
-            rentResponse.setCar(rent.getCar().getBrandAndModel());
-            rentResponse.setStartDate(rent.getStartDate());
-            rentResponse.setFinishDate(rent.getFinishDate());
+            rentResponse.setCar(String.format("%s %s with number: %s", rent.getCar().getBrand().getName(), rent.getCar().getModel(), rent.getCar().getRegistrationNum()));
+            rentResponse.setStartDate(dateFormat.format(rent.getStartDate()));
+            rentResponse.setFinishDate(dateFormat.format(rent.getFinishDate()));
 
             rentResponseList.add(rentResponse);
         }
@@ -55,13 +58,13 @@ public class UserCarController {
         Calendar calendar = Calendar.getInstance();
 
         if(user == null){
-            return ResponseEntity.ok(user.getFullName() + " is not registered!");
+            return ResponseEntity.ok(rentRequest.getUserNum() + " is not registered!");
         }
 
         if(selectedCar == null){
             return ResponseEntity.ok(
                     "Car with registration number " +
-                            selectedCar.getRegistrationNum() +
+                            rentRequest.getCarNum() +
                             " is not registered!");
         }
 

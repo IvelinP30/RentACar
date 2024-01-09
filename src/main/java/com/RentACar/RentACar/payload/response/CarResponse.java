@@ -9,6 +9,7 @@ import java.util.Set;
 public class CarResponse {
     private String Brand;
     private String Model;
+    private String registrationNum;
     private List<UserResponse> Users = new ArrayList<>();
 
     public String getBrand() {
@@ -33,5 +34,13 @@ public class CarResponse {
 
     public void setUsers(List<UserResponse> users) {
         Users = users;
+    }
+
+    public String getRegistrationNum() {
+        return registrationNum;
+    }
+
+    public void setRegistrationNum(String registrationNum) {
+        this.registrationNum = registrationNum;
     }
 }
