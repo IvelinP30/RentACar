@@ -6,9 +6,8 @@ import java.util.Date;
 
 public class RentRequest {
     private String userNum;
-    private Car car;
-    private Date startDate;
-    private Date finishDate;
+    private String carNum;
+    private int daysToBeUsed;
 
     public String getUserNum() {
         return userNum;
@@ -18,27 +17,19 @@ public class RentRequest {
         this.userNum = userNum;
     }
 
-    public Car getCar() {
-        return car;
+    public String getCarNum() {
+        return carNum;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCarNum(String carNum) {
+        this.carNum = carNum;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public int getDaysToBeUsed() {
+        return daysToBeUsed;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getFinishDate() {
-        return finishDate;
-    }
-
-    public void setFinishDate(Date finishDate) {
-        this.finishDate = finishDate;
+    public void setDaysToBeUsed(int daysToBeUsed) {
+        this.daysToBeUsed = daysToBeUsed;
     }
 }

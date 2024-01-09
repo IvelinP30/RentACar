@@ -12,6 +12,18 @@ import java.util.Date;
         private Date dateBirth;
         private boolean isManager;
 
+        public UserResponse() {
+        }
+
+        public UserResponse(String firstName, String lastName, String num, String city, Date dateBirth, boolean isManager) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.num = num;
+            this.city = city;
+            this.dateBirth = dateBirth;
+            this.isManager = isManager;
+        }
+
         public String getFirstName() {
             return firstName;
         }

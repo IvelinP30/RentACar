@@ -2,6 +2,8 @@ package com.RentACar.RentACar.controllers;
 
 import com.RentACar.RentACar.entities.*;
 import com.RentACar.RentACar.payload.request.CarRequest;
+import com.RentACar.RentACar.payload.response.CarResponse;
+import com.RentACar.RentACar.payload.response.UserResponse;
 import com.RentACar.RentACar.repositories.*;
 import com.RentACar.RentACar.service.UserCarService;
 import org.springframework.data.domain.Page;
@@ -43,8 +45,30 @@ public class CarController {
     }
 
     @GetMapping("/fetch")
-    public List<Car> getAllCars(){
-        return carRepo.findAll();
+    public List<CarResponse> getAllCars(){
+        List<CarResponse> cars = new ArrayList<>();
+
+        for(Car car: carRepo.findAll()){
+            CarResponse currentCar = new CarResponse();
+            currentCar.setBrand(car.getBrand().getName());
+            currentCar.setModel(car.getModel());
+
+            for(UserCar userCar : car.getCarUsers()){
+                User currentUser = userCar.getUser();
+
+                currentCar.getUsers().add(new UserResponse(
+                        currentUser.getFirstName(),
+                        currentUser.getLastName(),
+                        currentUser.getNum(),
+                        currentUser.getCity().getName(),
+                        currentUser.getBirthDate(),
+                        currentUser.isManager()));
+            }
+
+            cars.add(currentCar);
+        }
+
+        return cars;
     }
 
     @GetMapping("/find/model")
