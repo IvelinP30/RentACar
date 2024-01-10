@@ -86,9 +86,9 @@ public class UserCarController {
         return ResponseEntity.ok(
                 "User " +
                         savedUserCar.getUser().getFullName() +
-                        " rented" + savedUserCar.getCar().getBrandAndModel() +
+                        " rented " + savedUserCar.getCar().getBrandAndModel() +
                         " with registration number " + savedUserCar.getCar().getRegistrationNum() +
-                        " for" + rentRequest.getDaysToBeUsed() +
+                        " for " + rentRequest.getDaysToBeUsed() +
                         " days!" +
                         " Expire date: " +
                         savedUserCar.getFinishDate());
